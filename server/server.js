@@ -34,7 +34,7 @@ app.use(authMiddleWare)
 app.use("/api/auth", require("./Routes/auth.routes"))
 app.use("/api/questions", require("./Routes/questions.routes"))
 app.use("/api/answers", require("./Routes/answers.routes"))
-
+app.use("/api/voting", require("./Routes/voting.routes"))
 app.get("/", (req, res) => {
   
 })
