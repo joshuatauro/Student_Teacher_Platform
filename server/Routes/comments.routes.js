@@ -12,8 +12,8 @@ router.post("/post", async(req, res) => {
     res.status(200).json({code: 1, details: postCommentQuery.rows[0]})
   } catch(err) {
     console.log(err)
+    console.log(err)
   }
-
 })
 
 
