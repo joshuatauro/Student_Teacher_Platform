@@ -14,7 +14,7 @@ const UserQuestionDetail = ({url, username, background, createdAt, updatedAt, as
               updatedAt && <p className="text-gray-600 dark:text-gray-400">updated <Moment format='[on] MMM DD, YYYY [at] h:mma '>{updatedAt}</Moment></p>
               
             }
-            <h1 to={`/user/${username}`} className="text-cta">joshuatauro45</h1>
+            <h1 to={`/user/${username}`} className="text-cta">{username}</h1>
           </div>
         </div>
       </div>

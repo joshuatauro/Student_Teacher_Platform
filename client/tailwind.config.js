@@ -19,7 +19,7 @@ module.exports = {
         'dark-cta-fade-text': "#38BDF8"
       },
       gridTemplateColumns: {
-        'layout': '0.35fr 2.35fr 0.6fr',
+        'layout': '0.35fr 3fr ',
         'new-layout': '0.35fr 2.5fr',
         'inner-layout': '1.9fr 0.57fr',
         'post-layout': '0.1fr, 0.9fr'
