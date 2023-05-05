@@ -159,7 +159,7 @@ const College = () => {
 								}
 								{collegeInfo.brochure_url &&
 									<a href={collegeInfo.brochure_url} target="_blank" rel="noreferrer" className='button-container'>
-										<button className='text-white bg-sky-700 p-[5px]'>
+										<button className='text-white bg-cta p-[5px]'>
 											<ArrowDownTrayIcon className='w-5 h-5 text-white'/>
 											Brochure
 										</button>
