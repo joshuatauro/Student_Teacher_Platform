@@ -113,15 +113,14 @@
     }
     .about {
         margin-top: 20px;
-        box-shadow: 0px 1px 10px #ababab;
+        // box-shadow: 0px 1px 10px #ababab;
 
         h1 {
-            font-size: 20px;
+            font-size: 30px;
             font-weight: 500;
             border-bottom: 1px solid rgb(195, 195, 195);
             padding-left: 15px;
             padding-block: 10px;
-            text-decoration: underline;
         }
         h2 {
             font-weight: 500;
@@ -139,15 +138,13 @@
     }
     .courses, .contact {
         margin-top: 20px;
-        box-shadow: 0px 1px 10px #ababab;
 
         h1 {
-            font-size: 20px;
+            font-size: 30px;
             font-weight: 500;
             border-bottom: 1px solid rgb(195, 195, 195);
             padding-left: 15px;
             padding-block: 10px;
-            text-decoration: underline;
         }
         .content {
             padding: 15px;
@@ -158,6 +155,7 @@
                 padding-block: 10px;
                 border-top: 1px solid rgb(195, 195, 195);
                 padding-left: 10px;
+                font-weight: 500;
 
                 &:nth-of-type(1){
                     border: none;
@@ -171,15 +169,13 @@
     }
     .placements {
         margin-top: 20px;
-        box-shadow: 0px 1px 10px #ababab;
 
         h1 {
-            font-size: 20px;
+            font-size: 30px;
             font-weight: 500;
             border-bottom: 1px solid rgb(195, 195, 195);
             padding-left: 15px;
             padding-block: 10px;
-            text-decoration: underline;
         }
         .content {
             margin-top: 10px;
@@ -216,15 +212,13 @@
     }
     .scholarships {
         margin-top: 20px;
-        box-shadow: 0px 1px 10px #ababab;
 
         h1 {
-            font-size: 20px;
+            font-size: 30px;
             font-weight: 500;
             border-bottom: 1px solid rgb(195, 195, 195);
             padding-left: 15px;
             padding-block: 10px;
-            text-decoration: underline;
         }
         .content {
             margin-top: 10px;
