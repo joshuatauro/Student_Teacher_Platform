@@ -64,6 +64,7 @@ const Navbar = () => {
               <Link to="/" className="text-xl font-black text-gray-800 dark:text-white mr-2 hidden md:block">HIVE<span className="text-cta ">!</span></Link>
               <Link to="/" className="text-xl font-black text-gray-800 dark:text-white mr-2 md:hidden">H<span className="text-cta">!</span></Link>
             </div>
+            <Link to="/signup">SIGNUP</Link>
             <form action="" className='w-full' onSubmit={handleSearchQuery}>
 
             <input value={search} onChange={e => setSearch(e.target.value)} type="text" placeholder="Search anything here....." className={`w-full h-11 px-4 focus:outline-gray-800 outline outline-1 outline-gray-400 dark:outline-dark-fade rounded-md text-sm font-normal placeholder:text-gray-600 dark:bg-dark transition duration-300 dark:text-white ${searchShow ? 'block': 'hidden md:block '}`} />

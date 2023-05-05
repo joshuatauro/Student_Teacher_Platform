@@ -9,7 +9,7 @@ export const AuthProvider = ({children}) => {
   const [username, setUsername] = useState()
   const [url, setUrl] = useState()
   const [userBranch, setUserBranch] = useState()
-  const [priority, setPriority] = useState()
+  const [college, setCollege] = useState()
   const checkIfUserLoggedIn = async() => {
     try{
       const response = await axios.get('/api/auth/status', { withCredentials: true })
@@ -18,6 +18,7 @@ export const AuthProvider = ({children}) => {
       setUsername(response.data.username)
       setUrl(response.data.url)
       setUserBranch(response.data.branch)
+      setCollege(response.data.college)
       console.log(response)
       return response
     } catch(err) {
@@ -33,6 +34,8 @@ export const AuthProvider = ({children}) => {
       setUsername(response.data.username)
       setUserBranch(response.data.branch)
       setUrl(response.data.url)
+      setCollege(response.data.college)
+
       return response
     } catch(err) {
       return err.response
@@ -44,8 +47,17 @@ export const AuthProvider = ({children}) => {
       const response = await axios.post('/api/auth/sign-up', { email, password, username }, { withCredentials: true })
       setIsLoggedIn(response.data.status === "Success" ? true : false)
       setUserID(response.data.userID)
-      // console.log(response)
+      setCollege(response.data.college)
 
+      return response
+    } catch(err) {
+      return err.response
+    }
+  }
+  
+  const register = async(name, address, courses, brochureURL, desc, rank, rating, logoURL, bannerURL, highestPKG, medianPKG, averagePKG, clgURL, emailIdentifier) => {
+    try{
+      const response = await axios.post("/api/college/add", {name, address, courses, brochureURL, desc, rank, rating, logoURL, bannerURL, highestPKG, medianPKG, averagePKG, clgURL, emailIdentifier}, {withCredentials: true})
       return response
     } catch(err) {
       return err.response
@@ -71,7 +83,7 @@ export const AuthProvider = ({children}) => {
 
   return(
     <AuthContext.Provider value={{
-      isLoggedIn, login, signup, checkIfUserLoggedIn, userID, username, url, logout, userBranch
+      isLoggedIn, login, signup, checkIfUserLoggedIn, userID, username, url, logout, userBranch, register, college
     }} >
       {children}
     </AuthContext.Provider>

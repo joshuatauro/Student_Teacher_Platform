@@ -8,7 +8,7 @@ const Landing = () => {
 
   useEffect(() => {
     const getDetails = async() => {
-      const {data} = await axios.get("/api/questions/branch/cse", { withCredentials: false })
+      const {data} = await axios.get("/api/questions/", { withCredentials: false })
       console.log(data)
       setPosts(data.posts)
     }
