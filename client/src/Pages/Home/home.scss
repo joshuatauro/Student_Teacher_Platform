@@ -1,0 +1,80 @@
+#Home {
+  #main-nav {
+    .homepage-hide {
+      display: none;
+    }
+  }
+
+  .hero {
+    height: calc(100vh - 64px);
+
+    .content {
+      width: 90vw;
+      margin-inline: auto;
+      display: flex;
+      justify-content: space-between;
+      height: 100%;
+      align-items: flex-start;
+      padding-top: 100px;
+
+
+      .textbox {
+        h1 {
+          font-size: 70px;
+          font-weight: 700;
+          line-height: 1.1;
+
+          span {
+            color: #0a95ff;
+          }
+        }
+        h3 {
+          font-weight: 600;
+          font-size: 20px;
+          margin-top: 40px;
+        }
+        p {
+          font-size: 16px;
+          font-weight: 500;
+          width: 600px;
+        }
+        .search {
+          border: 1.5px solid black;
+          height: 52px;
+          margin-top: 40px;
+          width: fit-content;
+          border-radius: 5px;
+          overflow: hidden;
+        }
+        input {
+          height: 50px;
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
+          border-right: none;
+          padding: 10px;
+          padding-left: 13px;
+          font-size: 17px;
+          width: 400px;
+          font-weight: 500;
+        }
+        button {
+          height: 50px;
+          background-color: #0a95ff;
+          padding-inline: 30px;
+          font-size: 18px;
+          font-weight: 500;
+          text-transform: capitalize;
+          border-left: 1.5px solid black;
+        }
+      }
+      .imgbox {
+        margin-top: -100px;
+        img {
+          width: 600px;
+        }
+      }
+    }
+  }
+
+}
+

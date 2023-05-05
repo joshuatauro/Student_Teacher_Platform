@@ -56,19 +56,19 @@ const MainNavbar = () => {
     navigate(`/search?q=${search}`)
   }
   return (
-    <nav className="w-full border-b bg-white dark:bg-dark sticky z-50 top-0 border-cta border-b-gray-500 transition duration-300 ">
+    <nav id='main-nav' className="w-full border-b bg-white dark:bg-dark sticky z-50 top-0 border-cta border-b-gray-500 transition duration-300 ">
       <div className={` px-4 md:px-6 h-16 dark:border-dark-text ${isLoggedIn ? 'grid grid-cols-11' : 'flex'} items-center xl:max-w-[1600px] m-auto`}>
         <div className={`items-center w-full mr-2 ${searchShow ? 'col-span-11 md:col-span-7' : 'col-span-7'}`}>
-          <div className="flex items-center  ">
+          <div className="flex items-center">
             <div className="">
               <Link to="/" className="text-xl font-black text-gray-800 dark:text-white mr-6 hidden md:block">HIVE<span className="text-cta">!</span></Link>
               <Link to="/" className="text-xl font-black text-gray-800 dark:text-white mr-2 md:hidden"><span className="text-cta">!</span></Link>
             </div>
-            <form action="" className='w-full flex' onSubmit={handleSearchQuery}>
+            <form action="" className='homepage-hide w-full flex' onSubmit={handleSearchQuery}>
                 <input value={search} onChange={e => setSearch(e.target.value)} type="text" placeholder="Search college..." className={`w-full h-11 px-4 focus:outline-gray-800 outline outline-1 outline-gray-400 dark:outline-dark-fade rounded-md text-sm font-normal placeholder:text-gray-600 dark:bg-dark transition duration-300 dark:text-white ${searchShow ? 'block': 'hidden md:block '}`} />
                 <button type='submit'className='focus:outline-gray-800 bg-slate-300 content-center aspect-square h-11 rounded-md ml-2'><MagnifyingGlassIcon className='ml-2 h-5 pl-1'/></button>
             </form>
-            <button className={`dark:text-white ${searchShow ? 'block md:hidden': 'hidden'}`} onClick={handleSearchQuery}><MagnifyingGlassIcon className='h-5 ml-2 md:hidden' /></button>
+            <button className={`dark:text-white ${searchShow ? 'block md:hidden': 'hidden'} homepage-hide`} onClick={handleSearchQuery}><MagnifyingGlassIcon className='h-5 ml-2 md:hidden' /></button>
             <button className={`dark:text-white ${searchShow ? 'block md:hidden': 'hidden'}`} onClick={() => setSearchShow(!searchShow)}><XMarkIcon className='h-5 ml-2 md:hidden' /></button>
 
 
