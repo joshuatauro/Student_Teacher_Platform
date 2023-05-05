@@ -57,60 +57,6 @@ const QuestionRoute = () => {
   )
 }
 
-// const PublishRoute = () => {
-//   return(
-//     <>
-//       <Navbar />
-//       <div className="grid lg:grid-cols-layout max-w-[1600px] m-auto ">
-//         <SideNav />
-//           <Publish />
-//         <TagsBar />
-//       </div>
-//     </>
-//   )
-// }
-
-// const UserRoute = () => {
-//   return(
-//     <>
-//       <Navbar/>
-//       <div className="grid lg:grid-cols-layout max-w-[1600px] m-auto ">
-//         <SideNav tab={3} />
-//           <User />
-//         <TagsBar />
-//       </div>
-//     </>
-//   )
-// }
-
-// const UsersRoute = () => {
-//   return (
-//     <>
-//       <Navbar/>
-//       <div className="grid grid-cols-layout ">
-//         <SideNav tab={3} />
-//           <Users />
-//         <TagsBar />
-//       </div>
-//     </>
-//   )
-// }
-
-// const TagRoute = () => {
-//   return(
-//     <>
-//     <Navbar />
-//     <div className="grid lg:grid-cols-layout max-w-[1600px] m-auto ">
-//       <SideNav tab={1} />
-//         <Routes>
-//           <Route path='/' element={<TagQuestions />} />
-//         </Routes>
-//         <TagsBar />
-//     </div>
-//   </>
-//   )
-// }
-
 
 const UserRoute = () => {
   return(
