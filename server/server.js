@@ -15,14 +15,19 @@ app.use(cookieParser())
 
 const authMiddleWare = async(req, res, next) => {
   const token = req.cookies.auth
-  try{
-    const {username, id, priority} = jwt.verify(token, process.env.JWT_SECRET)
-    req.username = username
-    req.userID=id
-    req.priority = priority
-    next()
-  } catch(err){
-    console.log(err)
+  if(token){
+
+    try{
+      const {username, id, priority} = jwt.verify(token, process.env.JWT_SECRET)
+      req.username = username
+      req.userID=id
+      req.priority = priority
+      next()
+    } catch(err){
+      console.log(err)
+      next()
+    }
+  }else{
     next()
   }
 } 
@@ -34,6 +39,7 @@ app.use("/api/questions", require("./Routes/questions.routes"))
 app.use("/api/answers", require("./Routes/answers.routes"))
 app.use("/api/voting", require("./Routes/voting.routes"))
 app.use("/api/users", require("./Routes/users.routes"))
+app.use("/api/college", require("./Routes/colleges.routes"))
 
 app.listen(5000, () => {
   console.log("Listening to server at PORT", 5000, "!")

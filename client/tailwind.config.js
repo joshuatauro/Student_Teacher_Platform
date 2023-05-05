@@ -25,7 +25,7 @@ module.exports = {
         'post-layout': '0.1fr, 0.9fr'
       },
       minHeight: {
-        'custom': 'calc(100vh - 65px)'
+        'custom': 'calc(100vh - 77px)'
       },
       borderRadius: {
         'default': "5px"

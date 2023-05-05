@@ -9,7 +9,7 @@ CREATE TABLE users (
   about VARCHAR,
   year_of_passing VARCHAR,
   profile_url VARCHAR,
-  priority VARCHAR NOT NULL DEFAULT 0,
+  college_name VARCHAR,
   saved_posts TEXT[]
 );
 
@@ -65,5 +65,10 @@ CREATE TABLE college (
   highest_pkg INT DEFAULT -1,
   avg_pkg INT DEFAULT -1,
   median_pkg INT DEFAULT -1,
-  clg_address VARCHAR NOT NULL
+  clg_address VARCHAR NOT NULL,
+  email_identifier VARCHAR NOT NULL,
+  primary_phone VARCHAR,
+  secondary_phone VARCHAR,
+  scholarship_desc VARCHAR,
+  placement_desc VARCHAR
 );

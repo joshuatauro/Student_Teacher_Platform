@@ -7,10 +7,10 @@ const jwt = require("jsonwebtoken")
 require("dotenv").config()
 
 router.post("/sign-up", async(req, res) => {
-  const {email, password, username, semester, branch, yop} = req.body
+  const {email, password, username, semester, yop} = req.body
 
   try{
-    if(!email || !password || !username || !branch) return res.status(400).json({code: -1,message: "Enter all the details"})
+    if(!email || !password || !username) return res.status(400).json({code: -1,message: "Enter all the details"})
     
     const checkDuplicateQuery = await db.query(`
       SELECT username FROM users
@@ -23,9 +23,12 @@ router.post("/sign-up", async(req, res) => {
       SELECT email FROM users
       WHERE email = $1
     `, [email])
-    if(email.split("@")[1]!="sit.ac.in") return res.status(400).json({code: -1, message: "Only users with SIT emails can create an account"})
 
-    email.substring(0,3) == "1si" ? priority=0 : priority=1
+    const identifier = email.split("@")[1]
+    
+    const getCollegeName = await db.query("SELECT clg_name FROM college WHERE email_identifier = $1", [identifier])
+
+    const collegeName = getCollegeName.rows[0]?.clg_name || "general"
 
     if(checkEmailQuery.rowCount > 0) return res.status(400).json({code: -1,message: "The email is already in use"})
 
@@ -38,16 +41,15 @@ router.post("/sign-up", async(req, res) => {
 
 
     const saveUserDetailsQuery = await db.query(`
-      INSERT INTO users (email, username, hashed_password, site_joined, priority, semester, branch, year_of_passing, profile_url) 
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
-      RETURNING id, profile_url, username
-    `, [email, username, hashedPassword, new Date(), priority, semester, branch, yop, gravitarURL])
+      INSERT INTO users (email, username, hashed_password, site_joined, profile_url, college_name) 
+      VALUES ($1, $2, $3, $4, $5, $6) 
+      RETURNING id, profile_url, username, college_name
+    `, [email, username, hashedPassword, new Date(),gravitarURL, collegeName])
     
     if(saveUserDetailsQuery.rowCount>0){
       const authToken = jwt.sign({
         username,
         id: saveUserDetailsQuery.rows[0].id,
-        priority,
       }, process.env.JWT_SECRET)
 
       res.cookie("auth", authToken, {httpOnly: true, sameSite: 'lax'}).status(200).json({
@@ -57,7 +59,6 @@ router.post("/sign-up", async(req, res) => {
         userID: saveUserDetailsQuery.rows[0].id,
         username: saveUserDetailsQuery.rows[0].username ,
         url: saveUserDetailsQuery.rows[0].profile_url,
-        priority,
       })
 
     }
@@ -74,20 +75,17 @@ router.post("/login", async(req, res) => {
     if(!email || !password) return res.status(400).json({code: -1, message: "Please make sure all the details are entered properly"})
 
     const getDetailsQuery = await db.query(`
-      SELECT email, hashed_password, priority, username, id, profile_url FROM users
+      SELECT email, hashed_password, clg_name, username, id, profile_url FROM users
       WHERE email ILIKE $1
     `, [email])
 
     if(getDetailsQuery.rowCount<=0) return res.status(400).json({code:-1,message: "No such account found"})
-
-    if(email.split("@")[1] !== "sit.ac.in") return res.status(400).json({code: -1, message: "Only users with SIT emails can register"})
 
     if(getDetailsQuery.rows[0].email != email) return res.status(400).json({code:-1,message: "No such account found"})
     if(await bcrypt.compare(password, getDetailsQuery.rows[0].hashed_password)){
       const authToken = jwt.sign({
         username: getDetailsQuery.rows[0].username,
         id: getDetailsQuery.rows[0].id,
-        priority: getDetailsQuery.rows[0].priority
       }, process.env.JWT_SECRET)
       res.cookie("auth", authToken, {httpOnly: true, sameSite: 'lax'}).status(200).json({
         code: 1, message: "Logged in successfully",
@@ -95,7 +93,7 @@ router.post("/login", async(req, res) => {
         userID: getDetailsQuery.rows[0].id,
         username: getDetailsQuery.rows[0].username ,
         url: getDetailsQuery.rows[0].profile_url,
-        priority: getDetailsQuery.rows[0].priority
+        college: getDetailsQuery.rows[0].clg_name 
       })
     }else{
       return res.status(400).json({
@@ -103,7 +101,6 @@ router.post("/login", async(req, res) => {
         message: "Could not login, please check your email and/or password"
       })
     }
-
   }catch(err) {
     console.log(err)
   }
@@ -127,7 +124,6 @@ router.get("/status", async (req, res) => {
     username,
     isLoggedIn: userID ? true : false,
     url,
-    priority: req.priority
   });
 });
 

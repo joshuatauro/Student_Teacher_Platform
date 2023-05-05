@@ -15,6 +15,9 @@ import Publish from './Pages/CreatePost';
 import Placements from './Pages/Placements';
 import Resources from './Pages/Resources';
 import { useState } from 'react';
+import UserSignup from './Pages/UserSignup';
+import CollegeRegister from './Pages/RegisterCollege';
+import RegisterCollege from './Pages/RegisterCollege';
 
 
 const SearchRoute = () => {
@@ -162,7 +165,6 @@ const ResourceRoutes = () => {
 }
 
 function App() {
-  const [tab, setTab] = useState(1)
   return (
     <div className="App bg-white font-inter min-h-screen">
       <BrowserRouter>
@@ -170,7 +172,9 @@ function App() {
         <Route path="/" element={<FeedRoutes tab={1} />} />   
         <Route path="/question/:qid" element={<QuestionRoute tab={1} />} />       
         <Route path="/search" element={<SearchRoute tab={1} />} />  
-        <Route path="/signup" element={<Signup />} />    
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signup-user" element={<UserSignup />} />    
+        <Route path="/register-college" element={<RegisterCollege />} />    
         <Route path="/login" element={<Login  />} /> 
         <Route path="/user/:username" element={<UserRoute />} />
         <Route path="/post" element={<PostCreateRoute tab={4} />} />           
