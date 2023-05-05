@@ -4,10 +4,11 @@ import SideNav from '../sidenav';
 import PlacementPrep from '../../Pages/PlacementPrep';
 import { BrowserRouter, Route, Routes, Link  } from 'react-router-dom';
 import Resources from '../../Pages/Resources';
-
+import axios from 'axios'
 import data from '../data'
 import { StarIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
 import "./college.scss"
+import PostPreview from '../PostPreview';
 
 
 const About = () => {
@@ -87,6 +88,29 @@ const Contact = () => {
 	)
 }
 
+const Questions = ({id}) => {
+	
+  const [posts, setPosts] = useState([])
+
+  useEffect(() => {
+    const getDetails = async() => {
+      const {data} = await axios.get("http://localhost:5000/api/questions/", { withCredentials: false })
+      console.log(data)
+      setPosts(data.posts)
+    }
+    getDetails()
+  }, [])
+	return(
+		<div className=''>
+		<div className="w-full min-h-screen border-l-2 ">
+			{
+				posts?.map(({id, profile_url, username, title, branch, body, upvoted_by, downvoted_by, total_replies, sub_flair, created_at, is_pinned}) => <PostPreview title={title} body={body} qID={id} branch={branch} upvotedBy={upvoted_by} downvotedBy={downvoted_by} totalAnswers={total_replies} url={profile_url} username={username} subFlair={sub_flair} createdAt={created_at} />)
+			}
+		</div>
+	</div>
+	)
+}
+
 const College = () => {
 	const [avgRating, setAvgRating] = useState(0);
 
@@ -98,6 +122,7 @@ const College = () => {
 		setAvgRating(sumOfRatings/data.rating.length)
 }, [avgRating])
 	
+
 
   return (
     <>
@@ -138,16 +163,6 @@ const College = () => {
 					</div>
 				</div>
 				<div className='page-nav'>
-				{/* <nav>
-					<div>
-						<Link to="/college">Info</Link>
-						<Link to="/college/courses">Courses</Link>
-						<Link to="/college/placements">Placements</Link>
-						<Link to="/college/scholarships">Scholarships</Link>
-						<Link to="/college/contact">Contact</Link>
-					</div>
-					<Link className='forum-link'>Forum</Link>
-				</nav> */}
 				<Routes>
 					<Route path="" element={<About />}/>
 					<Route path="courses" element={<Courses />}/>
@@ -156,6 +171,7 @@ const College = () => {
 					<Route path="contact" element={<Contact />}/>
 					<Route path="placement-prep" element={<PlacementPrep />}/>
 					<Route path="resources" element={<Resources />}/>
+					<Route path="forum" element={<Questions />} />
 				</Routes>
 				</div>
 				

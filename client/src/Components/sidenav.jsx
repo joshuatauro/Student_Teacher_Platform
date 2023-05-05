@@ -59,7 +59,7 @@ const SideNav = ({tab}) => {
               </div>
             </div>
           </Link>
-          <Link to="/">
+          <Link to="/college/forum">
             <div to="/feed" className={` py-1.5 mb-2 ${val === 1 ? 'bg-gray-200 dark:bg-dark-cta-fade  border-r-4 border-cta' : ''} dark:text-white`}>
               <div className="flex items-center w-9/12 m-auto">
                 <GlobeAsiaAustraliaIcon className="h-6 mr-1 w-6" />
