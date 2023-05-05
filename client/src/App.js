@@ -12,7 +12,7 @@ import Signup from './Pages/SignUp';
 import Login from './Pages/Login';
 import User from './Pages/User';
 import Publish from './Pages/CreatePost';
-import Placements from './Pages/Placements';
+import PlacementPrep from './Pages/PlacementPrep';
 import Resources from './Pages/Resources';
 import { useState } from 'react';
 import UserSignup from './Pages/UserSignup';
@@ -88,12 +88,11 @@ const PostCreateRoute = () => {
 
 const PlacementRoute = ({tab}) => {
   return(
-
     <>
       <Navbar />
       <div className="grid lg:grid-cols-new-layout max-w-[1600px] m-auto ">
         <SideNav tab={tab} />
-        <Placements />
+        <PlacementPrep />
       </div>
     </>
     )
@@ -126,8 +125,8 @@ function App() {
         <Route path="/login" element={<Login  />} /> 
         <Route path="/user/:username" element={<UserRoute />} />
         <Route path="/post" element={<PostCreateRoute tab={4} />} />           
-        <Route path="/placements" element={<PlacementRoute tab={3} />} />
-        <Route path="/resources" element={<ResourceRoutes tab={2} />} />
+        {/* <Route path="/placement-prep" element={<PlacementRoute tab={3} />} />
+        <Route path="/resources" element={<ResourceRoutes tab={2} />} /> */}
         <Route path="/college/*" element={<College/>}/>                              
       </Routes>
       </BrowserRouter>

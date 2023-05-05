@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Placements = () => {
+const PlacementPrep = () => {
   return (
     <>
       <div className='mx-5'>
@@ -40,4 +40,4 @@ const Placements = () => {
   )
 }
 
-export default Placements
+export default PlacementPrep
