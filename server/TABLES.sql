@@ -6,7 +6,7 @@ CREATE TABLE users (
   semester VARCHAR,
   hashed_password VARCHAR NOT NULL,
   site_joined TIMESTAMP NOT NULL,
-  about VARCHAR ,
+  about VARCHAR,
   year_of_passing VARCHAR,
   profile_url VARCHAR,
   priority VARCHAR NOT NULL DEFAULT 0,
@@ -48,4 +48,22 @@ CREATE TABLE comments (
   body VARCHAR NOT NULL,
   created_at TIMESTAMP NOT NULL,
   updated_at TIMESTAMP NOT NULL
+);
+
+CREATE TABLE college (
+  id VARCHAR PRIMARY KEY DEFAULT uuid_generate_v4(),
+  clg_name VARCHAR NOT NULL,
+  clg_desc VARCHAR NOT NULL,
+  courses TEXT[] DEFAULT array[]::VARCHAR[],
+  clg_url VARCHAR NOT NULL,
+  brochure_url VARCHAR NOT NULL,
+  rank INT DEFAULT -1,
+  rating INT[],
+  logo_url VARCHAR NOT NULL,
+  img_urls TEXT[] DEFAULT array[]::VARCHAR[],
+  banner_url VARCHAR NOT NULL,
+  highest_pkg INT DEFAULT -1,
+  avg_pkg INT DEFAULT -1,
+  median_pkg INT DEFAULT -1,
+  clg_address VARCHAR NOT NULL
 );
