@@ -8,10 +8,9 @@ require("dotenv").config()
 
 router.post("/sign-up", async(req, res) => {
   const {email, password, username, semester, branch, yop} = req.body
-  console.log(req.body)
 
   try{
-    if(!email || !password || !username) return res.status(400).json({code: -1,message: "Enter all the details"})
+    if(!email || !password || !username || !branch) return res.status(400).json({code: -1,message: "Enter all the details"})
     
     const checkDuplicateQuery = await db.query(`
       SELECT username FROM users
@@ -24,6 +23,9 @@ router.post("/sign-up", async(req, res) => {
       SELECT email FROM users
       WHERE email = $1
     `, [email])
+    if(email.split("@")[1]!="sit.ac.in") return res.status(400).json({code: -1, message: "Only users with SIT emails can create an account"})
+
+    email.substring(0,3) == "1si" ? priority=0 : priority=1
 
     if(checkEmailQuery.rowCount > 0) return res.status(400).json({code: -1,message: "The email is already in use"})
 
@@ -38,19 +40,24 @@ router.post("/sign-up", async(req, res) => {
     const saveUserDetailsQuery = await db.query(`
       INSERT INTO users (email, username, hashed_password, site_joined, priority, semester, branch, year_of_passing, profile_url) 
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
-      RETURNING id
-    `, [email, username, hashedPassword, new Date(), 0, semester, branch, yop, gravitarURL])
+      RETURNING id, profile_url, username
+    `, [email, username, hashedPassword, new Date(), priority, semester, branch, yop, gravitarURL])
     
     if(saveUserDetailsQuery.rowCount>0){
       const authToken = jwt.sign({
         username,
         id: saveUserDetailsQuery.rows[0].id,
-        priority: 0,
+        priority,
       }, process.env.JWT_SECRET)
 
       res.cookie("auth", authToken, {httpOnly: true, sameSite: 'lax'}).status(200).json({
         code: 1,
         message: "Successfully created a new user!",
+        isLoggedIn: true,
+        userID: saveUserDetailsQuery.rows[0].id,
+        username: saveUserDetailsQuery.rows[0].username ,
+        url: saveUserDetailsQuery.rows[0].profile_url,
+        priority,
       })
 
     }
@@ -67,9 +74,13 @@ router.post("/login", async(req, res) => {
     if(!email || !password) return res.status(400).json({code: -1, message: "Please make sure all the details are entered properly"})
 
     const getDetailsQuery = await db.query(`
-      SELECT email, hashed_password, priority, username, id FROM users
+      SELECT email, hashed_password, priority, username, id, profile_url FROM users
       WHERE email ILIKE $1
     `, [email])
+
+    if(getDetailsQuery.rowCount<=0) return res.status(400).json({code:-1,message: "No such account found"})
+
+    if(email.split("@")[1] !== "sit.ac.in") return res.status(400).json({code: -1, message: "Only users with SIT emails can register"})
 
     if(getDetailsQuery.rows[0].email != email) return res.status(400).json({code:-1,message: "No such account found"})
     if(await bcrypt.compare(password, getDetailsQuery.rows[0].hashed_password)){
@@ -78,7 +89,14 @@ router.post("/login", async(req, res) => {
         id: getDetailsQuery.rows[0].id,
         priority: getDetailsQuery.rows[0].priority
       }, process.env.JWT_SECRET)
-      res.cookie("auth", authToken, {httpOnly: true, sameSite: 'lax'}).status(200).json({code: 1, message: "Logged in successfully"})
+      res.cookie("auth", authToken, {httpOnly: true, sameSite: 'lax'}).status(200).json({
+        code: 1, message: "Logged in successfully",
+        isLoggedIn: true,
+        userID: getDetailsQuery.rows[0].id,
+        username: getDetailsQuery.rows[0].username ,
+        url: getDetailsQuery.rows[0].profile_url,
+        priority: getDetailsQuery.rows[0].priority
+      })
     }else{
       return res.status(400).json({
         code: -1,
@@ -87,16 +105,30 @@ router.post("/login", async(req, res) => {
     }
 
   }catch(err) {
-    console.log("this is the error" ,err)
+    console.log(err)
   }
 })
 
 router.get("/logout", async(req, res) => {
   try{
-    res.clearCookie("auth").status(200).json({code: -1, message: "Logged out"})
+    res.clearCookie("auth").status(200).json({code: 1, message: "Logged out"})
   }catch(err){
     console.log(err)
   }
 })
+
+router.get("/status", async (req, res) => {
+  const userID = req.userID;
+  const username = req.username;
+  const url = req.profile_url;
+  res.status(200).json({
+    status: "Success",
+    userID,
+    username,
+    isLoggedIn: userID ? true : false,
+    url,
+    priority: req.priority
+  });
+});
 
 module.exports = router
