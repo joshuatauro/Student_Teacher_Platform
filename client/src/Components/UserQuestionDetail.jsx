@@ -1,5 +1,6 @@
 import React from 'react'
 import Moment from 'react-moment'
+import { Link } from 'react-router-dom'
 // import { Link } from 'react-router-dom'
 
 const UserQuestionDetail = ({url, username, background, createdAt, updatedAt, asked}) => {
@@ -14,7 +15,7 @@ const UserQuestionDetail = ({url, username, background, createdAt, updatedAt, as
               updatedAt && <p className="text-gray-600 dark:text-gray-400">updated <Moment format='[on] MMM DD, YYYY [at] h:mma '>{updatedAt}</Moment></p>
               
             }
-            <h1 to={`/user/${username}`} className="text-cta">{username}</h1>
+            <Link to={`/user/${username}`} className="text-cta">{username}</Link>
           </div>
         </div>
       </div>
