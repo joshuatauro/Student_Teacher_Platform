@@ -6,6 +6,7 @@ function Home() {
     <>
       
       <div id="Home" className="Home">
+      
         <MainNavbar />
         <section class="hero">
           <div class="content">
@@ -13,6 +14,8 @@ function Home() {
               <h1>WELCOME TO<br/>HIVE<span>!</span></h1>
               <h3>"Discover your path to higher education with just a few clicks."</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis cum, maxime provident sit, voluptate eum commodi cumque eos placeat officia eius.</p>
+
+              
                 
                 <div class="search">
 
