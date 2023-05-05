@@ -13,8 +13,8 @@ import { useNavigate } from 'react-router-dom'
 import AnswerBody from '../Components/AnswerBody'
 const SingleQuestion = () => {
   const navigate = useNavigate()
-  const { userID, username: owner_username, url: owner_url } = useContext(AuthContext)
-  const { qid } = useParams()
+  const { userID, username: owner_username, url: owner_url, college } = useContext(AuthContext)
+  const { qID, cID } = useParams()
 
   const [body, setBody] = useState('')
   const [authorID, setAuthorID] = useState('234')
@@ -40,7 +40,7 @@ const SingleQuestion = () => {
 
   useEffect(() => {
     const getQuestionData = async() => {
-      const { data } = await axios.get(`/api/questions/id/${qid}`, {withCredentials: true} )
+      const { data } = await axios.get(`/api/questions/id/${qID}`, {withCredentials: true} )
       const { body, title, profile_url, username, upvoted_by, downvoted_by, views, created_at, updated_at, user_id:author_id, tags, branch} = data.post
       setBody(body)
       setEditingBody(body)
@@ -58,7 +58,7 @@ const SingleQuestion = () => {
     }
 
     const getAnswersAndCommentsData = async() => {
-      const { data } = await axios.get(`/api/answers/id/${qid}`, { withCredentials: true })
+      const { data } = await axios.get(`/api/answers/id/${qID}`, { withCredentials: true })
       setComments(data.comments)
       console.log(data.answers, "is the answer")
       setAnswers(data.answers)
@@ -79,28 +79,37 @@ const SingleQuestion = () => {
       duration: 2500
     })
   }
-
   const submitAnswer = async(e) => {
     e.preventDefault()
-    try{
-      const { data } = await axios.post('/api/answers/post', { body:answer, qID: qid }, { withCredentials: true })
-      if(data.code === 1){
-        toast.success('Successfully submitted your answer', {
-          icon: <CheckCircleIcon className='h-6' />,
+    if(college === cID){
+      try{
+        const { data } = await axios.post('/api/answers/post', { body:answer, qID: qID }, { withCredentials: true })
+        if(data.code === 1){
+          toast.success('Successfully submitted your answer', {
+            icon: <CheckCircleIcon className='h-6' />,
+            style: {
+              backgroundColor: "#22C55E",
+              color: "#fff"
+            },
+            duration: 2500
+          })
+        }
+        const answerDets = data.answer
+        answerDets.username = owner_username
+        answerDets.url = owner_url
+        setAnswers([...answers, answerDets])
+        setAnswer('')
+      } catch(err) {
+        toast.error(err.response.data.message, {
+          icon: <XCircleIcon className='h-6' />,
           style: {
-            backgroundColor: "#22C55E",
+            backgroundColor: "#EF4444",
             color: "#fff"
-          },
-          duration: 2500
+          }
         })
       }
-      const answerDets = data.answer
-      answerDets.username = owner_username
-      answerDets.url = owner_url
-      setAnswers([...answers, answerDets])
-      setAnswer('')
-    } catch(err) {
-      toast.error(err.response.data.message, {
+    }else{
+      toast.error("Only students of this college can answer the question", {
         icon: <XCircleIcon className='h-6' />,
         style: {
           backgroundColor: "#EF4444",
@@ -114,13 +123,13 @@ const SingleQuestion = () => {
   const handleUpvote = async() => {
     try{
       if(upvotedBy?.includes(userID)) {
-        const { data } = await axios.get(`/api/voting/questions/${qid}/remove-upvote`,{ withCredentials: true })
+        const { data } = await axios.get(`/api/voting/questions/${qID}/remove-upvote`,{ withCredentials: true })
         setUpvotedBy(data.upvoted_by)
         setDownvotedBy(data.downvoted_by)
         
       } else {
         
-        const { data } = await axios.get(`/api/voting/questions/${qid}/add-upvote`, { withCredentials: true })
+        const { data } = await axios.get(`/api/voting/questions/${qID}/add-upvote`, { withCredentials: true })
         setUpvotedBy(data.upvoted_by)
         setDownvotedBy(data.downvoted_by)
       }
@@ -139,12 +148,12 @@ const SingleQuestion = () => {
     try{
 
       if(downvotedBy?.includes(userID)) {
-        const { data } = await axios.get(`/api/voting/questions/${qid}/remove-downvote`,{ withCredentials: true })
+        const { data } = await axios.get(`/api/voting/questions/${qID}/remove-downvote`,{ withCredentials: true })
         setUpvotedBy(data.upvoted_by)
         setDownvotedBy(data.downvoted_by)
       } else {
         
-        const { data } = await axios.get(`/api/voting/questions/${qid}/add-downvote`, { withCredentials: true })
+        const { data } = await axios.get(`/api/voting/questions/${qID}/add-downvote`, { withCredentials: true })
         setUpvotedBy(data.upvoted_by)
         setDownvotedBy(data.downvoted_by)
       }
@@ -162,7 +171,7 @@ const SingleQuestion = () => {
   const handleEditQuestion = async() => {
     try {
     
-      const { data } = await axios.post(`/api/questions/edit/${qid}`, { editedBody: editingBody }, { withCredentials: true })
+      const { data } = await axios.post(`/api/questions/edit/${qID}`, { editedBody: editingBody }, { withCredentials: true })
       console.log(data)
       if(data.code===1) {
         setBody(data.editedBody[0].body)
@@ -217,7 +226,7 @@ const SingleQuestion = () => {
   const handleDeleteQuestion = async() => {
     if(window.confirm("Are you sure you want to delete this question? This action is non-reversible")) {
       try {
-        const { data } = await axios.delete(`/api/questions/delete/${qid}`, { withCredentials: true })
+        const { data } = await axios.delete(`/api/questions/delete/${qID}`, { withCredentials: true })
         if(data.code === 1) {
           toast.success(data.message, {
             icon: <CheckCircleIcon className='h-6' />,
@@ -240,7 +249,7 @@ const SingleQuestion = () => {
 
 
   return (
-    <div className="md:border-l-2 dark:border-dark-fade  min-h-custom dark:bg-dark transition duration-300">
+    <div className="md:border-l-2 dark:border-dark-fade mt-10  min-h-custom dark:bg-dark transition duration-300">
       <div className="px-4 md:pl-4 md:pr-6 m-auto pt-5 pb-3 border-b-2 dark:border-dark-fade ">
         <div className="md:flex items-center justify-between">
           <h1 className="text-mobile-lg md:text-[24px] font-medium text-gray-800 md:mr-2 dark:text-white">{title}</h1>
@@ -255,7 +264,7 @@ const SingleQuestion = () => {
           </div>
         </div>
       </div>
-      <div className="grid md:grid-cols-inner-layout">
+      <div className="">
         <div className="md:border-r-2 pt-3 dark:border-dark-fade ">
           <div className="grid grid-cols-[0.14fr_0.86fr] md:grid-cols-[0.1fr_0.9fr] pb-4 border-b-2 dark:border-dark-fade">
             <div className='flex flex-col h-fit items-center '>

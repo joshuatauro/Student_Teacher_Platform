@@ -13,7 +13,7 @@ const SearchQuestions = () => {
 
   useEffect(() => {
     const fetchPosts = async() => {
-      const { data } = await axios.get(`/api/questions/branch/cse/search?q=${searchParams.get("q")}`)
+      const { data } = await axios.get(`/api/questions/search?q=${searchParams.get("q")}`)
       setQuestions(data.posts)
       console.log(data)
     }

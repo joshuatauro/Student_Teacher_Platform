@@ -28,9 +28,9 @@ const SideNav = ({tab}) => {
     }
   }, [window.location.href])
   return (
-    <div className="pt-5  dark:bg-dark transition duration-300 hidden lg:block min-h-screen">
+    <div className="pt-5  h-custom w-[200px] h-screen dark:bg-dark transition duration-300 hidden lg:block">
       <div className="">
-        <ul className="sticky top-[100px]">
+        <ul className="">
           <Link to={``}>
             <div className={` py-1.5 mb-2  dark:text-white ${val === 1 ? "bg-cta-fade border-r-4 border-cta" : ""}`}>
               <div className="flex items-center w-9/12 m-auto">

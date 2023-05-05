@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react'
 import MainNavbar from '../MainNavbar'
 import SideNav from '../sidenav';
 import PlacementPrep from '../../Pages/PlacementPrep';
-import { BrowserRouter, Route, Routes, Link, useParams  } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, Link, useParams, useNavigate  } from 'react-router-dom';
 import Resources from '../../Pages/Resources';
 import axios from 'axios'
 import data from '../data'
-import { StarIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
+import { StarIcon, ArrowDownTrayIcon, MagnifyingGlassIcon } from '@heroicons/react/24/solid'
 import "./college.scss"
 import PostPreview from '../PostPreview';
 import Publish from '../../Pages/CreatePost';
+import SingleQuestion from '../../Pages/SingleQuestion';
 
 
 const About = ({data}) => {
@@ -91,6 +92,14 @@ const Contact = () => {
 const Questions = ({id}) => {
 	
   const [posts, setPosts] = useState([])
+  const navigate = useNavigate()
+
+	const handleSearchQuery = (e) => {
+    e.preventDefault()
+    navigate(`search?q=${search}`)
+  }
+const searchShow = true
+	const [search, setSearch] = useState('')
 
   useEffect(() => {
     const getDetails = async() => {
@@ -98,12 +107,17 @@ const Questions = ({id}) => {
       console.log(data)
       setPosts(data.posts)
     }
+		console.log("RENDERED")
     getDetails()
   }, [])
 	return(
 		<div className=''>
-		<div className="w-full min-h-screen ">
+		<div className="w-full mb-32 ">
 			<h1 className='font-medium text-[30px] py-[10px] border-b mb-5 px-[15px] mt-3'>Forum</h1>
+			<form action="" className='w-full flex mb-5 outline outline-gray-200 outline-2' onSubmit={handleSearchQuery}>
+				<input value={search} onChange={e => setSearch(e.target.value)} type="text" placeholder="Search a question..." className={`w-full h-11 px-4 focus:outline-gray-800  outline-gray-400 dark:outline-dark-fade  text-sm font-normal placeholder:text-gray-600 dark:bg-dark transition duration-300 dark:text-white ${searchShow ? 'block': 'hidden md:block '}`} />
+				<button type='submit' className='focus:outline-gray-800 bg-cta  px-5'><MagnifyingGlassIcon className='text-white h-5'/></button>
+      </form>
 			{
 				posts?.map(({id, profile_url, username, title, branch, body, upvoted_by, downvoted_by, total_replies, sub_flair, created_at, is_pinned}) => <PostPreview title={title} body={body} qID={id} branch={branch} upvotedBy={upvoted_by} downvotedBy={downvoted_by} totalAnswers={total_replies} url={profile_url} username={username} subFlair={sub_flair} createdAt={created_at} />)
 			}
@@ -111,6 +125,7 @@ const Questions = ({id}) => {
 	</div>
 	)
 }
+
 
 const College = () => {
 	const [avgRating, setAvgRating] = useState(0);
@@ -140,18 +155,18 @@ const College = () => {
 		</div>
 		<div className='college-wrapper bg-white min-w-full flex justify-center'>
 			<div className=" bg-white mt-10">
-				<div  className='section-1 w-auto '>
+				<div  className='section-1   '>
 					<div className='banner'>
-						<img className=' object-fill' src={data.banner_url} alt={data.clg_name} />
+						<img className=' object-contain' src={collegeInfo.banner_url} alt={collegeInfo.clg_name} />
 					</div>
 								
 					<div className='bottom'>
 						<div className='img-container'>
-							<img className='' src={data.logo_url} alt={data.clg_name} />
+							<img className='' src={collegeInfo.logo_url} alt={collegeInfo.clg_name} />
 						</div>
 						<div className='content'>
 							<h1>{collegeInfo.clg_name}</h1>
-							<a href={data.clg_url} className=' text-blue-600 italic hover:underline text-[14px]'>Visit</a>
+							<a href={collegeInfo.clg_url} className=' text-blue-600 italic hover:underline text-[14px]'>Visit</a>
 							<div>
 								{(data.rating[0])? 
 									<div className='rating'><b>{avgRating.toPrecision(2)}</b> <StarIcon className='w-5 h-5 mt-0.5 white'/> <i>({data.rating.length})</i></div>
@@ -179,6 +194,9 @@ const College = () => {
 					<Route path="placement-prep" element={<PlacementPrep />}/>
 					<Route path="resources" element={<Resources />}/>
 					<Route path="forum" element={<Questions />} />
+					<Route path="forum/search" element={<Questions />} />
+					<Route path="forum/:qID" element={<SingleQuestion />} />
+
 					<Route path="post" element={<Publish />} />
 
 				</Routes>

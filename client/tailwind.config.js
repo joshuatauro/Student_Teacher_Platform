@@ -36,7 +36,8 @@ module.exports = {
         'mobile-base': '17px',
         'mobile-lg': '19px',
         'mobile-xl': '22px'
-      }
+      },
+      
     },
   },
   plugins: [],
