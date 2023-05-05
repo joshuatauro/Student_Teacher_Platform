@@ -125,9 +125,7 @@ function App() {
         <Route path="/login" element={<Login  />} /> 
         <Route path="/user/:username" element={<UserRoute />} />
         <Route path="/post" element={<PostCreateRoute tab={4} />} />           
-        {/* <Route path="/placement-prep" element={<PlacementRoute tab={3} />} />
-        <Route path="/resources" element={<ResourceRoutes tab={2} />} /> */}
-        <Route path="/college/*" element={<College/>}/>                              
+        <Route path="/:cID/*" element={<College/>}/>                              
       </Routes>
       </BrowserRouter>
     </div>

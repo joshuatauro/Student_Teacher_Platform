@@ -8,7 +8,7 @@
 }
 
 .college-wrapper {
-    margin-bottom: 300px;
+    // margin-bottom: 300px;
 
     &>div {
         margin-inline: 30px;
@@ -188,10 +188,11 @@
             gap: 20px;
 
             .card {
-                background-color: rgb(73, 90, 162);
+                background-color: #0A95FF;
                 border-radius: 5px;
-                border: 1px solid black;
+                border: 1px solid #0A95FF;
                 text-align: center;
+                color: white;
 
                 h2 {
                     height: 60px;

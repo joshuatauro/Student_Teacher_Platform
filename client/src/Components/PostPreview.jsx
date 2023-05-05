@@ -6,7 +6,7 @@ import UserQuestionDetail from './UserQuestionDetail'
 
 const PostPreview = ({title, body, createdAt, updatedAt, username, url, totalAnswers, tags, upvotedBy, downvotedBy, qID, subFlair}) => {
   return (
-    <section className="w-full text-inter border-b-2 dark:border-dark-fade dark:bg-dark transition duration-300">
+    <section className="w-full text-inter border-t-2 border-x-2 dark:border-dark-fade dark:bg-dark transition duration-300">
       <div className="px-2 pr-2 m-auto py-3">
         <div className="md:grid md:grid-cols-post-layout gap-3 md:gap-0">
           <div className="flex items-center md:flex-col">
