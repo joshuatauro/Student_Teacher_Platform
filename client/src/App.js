@@ -20,6 +20,7 @@ import CollegeRegister from './Pages/RegisterCollege';
 import RegisterCollege from './Pages/RegisterCollege';
 import College from './Components/College/College';
 import MainNavbar from './Components/MainNavbar';
+import Home from './Pages/Home/Home';
 
 
 const SearchRoute = () => {
@@ -116,7 +117,7 @@ function App() {
     <div className="App bg-white font-inter min-h-screen">
       <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FeedRoutes tab={1} />} />   
+        <Route path="/" element={<Home />} />   
         <Route path="/question/:qid" element={<QuestionRoute tab={1} />} />       
         <Route path="/search" element={<SearchRoute tab={1} />} />  
         <Route path="/signup" element={<Signup />} />
