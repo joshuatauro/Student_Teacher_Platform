@@ -1,6 +1,6 @@
 CREATE TABLE users (
   id VARCHAR PRIMARY KEY default uuid_generate_v4(),
-  name VARCHAR NOT NULL,
+  username VARCHAR NOT NULL,
   email VARCHAR UNIQUE NOT NULL,
   branch VARCHAR,
   semester VARCHAR,
@@ -10,7 +10,7 @@ CREATE TABLE users (
   year_of_passing VARCHAR,
   profile_url VARCHAR,
   priority VARCHAR NOT NULL DEFAULT 0,
-  saved_posts TEXT[],
+  saved_posts TEXT[]
 );
 
 CREATE TABLE questions (
