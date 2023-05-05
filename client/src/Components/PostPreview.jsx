@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import Tag from './Tag'
 import UserQuestionDetail from './UserQuestionDetail'
 
-const PostPreview = ({title, body, createdAt, updatedAt, username, url, totalAnswers, tags, upvotedBy, downvotedBy, qID, branch, subFlair, is_pinned}) => {
+const PostPreview = ({title, body, createdAt, updatedAt, username, url, totalAnswers, tags, upvotedBy, downvotedBy, qID, subFlair}) => {
   return (
     <section className="w-full text-inter border-b-2 dark:border-dark-fade dark:bg-dark transition duration-300">
       <div className="px-2 pr-2 m-auto py-3">
@@ -25,16 +25,9 @@ const PostPreview = ({title, body, createdAt, updatedAt, username, url, totalAns
             <div className="flex items-center">
               <Link to={`/question/${qID}`} className=" text-mobile-sm md:text-[19px] font-normal md:font-normal underline underline-offset-[2px] decoration-1 text-cta dark:text-dark-cta-fade-text mr-2">{title}</Link>
               <Tag tagName={subFlair} isFlair={true} />
-              {
-                is_pinned ? <CheckBadgeIcon className='h-6' /> : ""
-              }
-              {/* <CheckB/adgeIcon /> */}
             </div>
             <p className='text-mobile-xs md:text-[14px] text-gray-700 font-normal dark:text-dark-text'>{body}</p>
             <div className=" mt-2 justify-between">
-              <div className="flex"> 
-                <Tag tagName={branch} />
-              </div>
               <div className="flex justify-end">
               <UserQuestionDetail url={url} username={username} createdAt={createdAt} background={false} asked={true} />
               </div>

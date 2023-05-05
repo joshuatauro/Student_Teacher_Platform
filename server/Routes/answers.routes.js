@@ -72,25 +72,20 @@ router.delete("/delete/:aID", async(req, res) => {
   }
 })
 
-router.post("/edit/:aID", async(req, res) => {
-  const { editedAns } = req.body
+router.post("/:aID/edit", async(req, res) => {
+  const { editedBody } = req.body
   const aID = req.params.aID
   const userID = req.userID
+  console.log(aID, userID)
   try{
-    if(!userID) return res.status(400).json({code: -1, message: "Login to post answers"})
-    if(!qID || !editedAns) return res.status(400).json({code: -1, message: "Enter all the required fields"})
-
-    const editAnswerQuery = await db.query(`
-      UPDATE answers SET
-      body=$1, updated_at=$2
-      WHERE user_id=$3 AND a_id=$4  
-      returning body
-    `)
-
-    res.status(200).json({code: 1, editedContent: editAnswerQuery.rows[0]})
+    if(!userID) return res.status(401).json({code: -1, message: "Login to post answers"})
+    if( !editedBody) return res.status(400).json({code: -1, message: "Enter all the required fields"})
+    
+    const editAnswerQuery = await db.query(`UPDATE answers SET body=$1 WHERE id=$2 returning body`, [editedBody,aID])
+    res.status(200).json({code: 1, editedDetails: editAnswerQuery.rows[0], message: "Successfully edited"})
 
   } catch(err) {
-
+    console.log(err.message)
   }
 })
 

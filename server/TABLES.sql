@@ -21,9 +21,7 @@ CREATE TABLE questions (
   upvoted_by TEXT[] DEFAULT array[]::VARCHAR[],
   downvoted_by TEXT[] DEFAULT array[]::VARCHAR[],
   created_at TIMESTAMP NOT NULL,
-  branch VARCHAR NOT NULL,
   sub_flair VARCHAR,
-  is_pinned BOOLEAN DEFAULT 'f',
   img_url VARCHAR,
   search_helper TSVECTOR NOT NULL
 );

@@ -18,6 +18,8 @@ import { useState } from 'react';
 import UserSignup from './Pages/UserSignup';
 import CollegeRegister from './Pages/RegisterCollege';
 import RegisterCollege from './Pages/RegisterCollege';
+import College from './Components/College/College';
+import MainNavbar from './Components/MainNavbar';
 
 
 const SearchRoute = () => {
@@ -125,7 +127,8 @@ function App() {
         <Route path="/user/:username" element={<UserRoute />} />
         <Route path="/post" element={<PostCreateRoute tab={4} />} />           
         <Route path="/placements" element={<PlacementRoute tab={3} />} />
-        <Route path="/resources" element={<ResourceRoutes tab={2} />} />                                  
+        <Route path="/resources" element={<ResourceRoutes tab={2} />} />
+        <Route path="/college/*" element={<College/>}/>                              
       </Routes>
       </BrowserRouter>
     </div>

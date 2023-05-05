@@ -58,8 +58,11 @@ const AnswerBody = ({url, upvotedBy, downvotedBy, childrenComments, body, userna
   }
 
   const handleEditAnswer = async() => {
+    console.log("clicked")
     try{
+      console.log("inside")
       const { data } = await axios.post(`/api/answers/${answerID}/edit`,{ editedBody }, { withCredentials: true })
+      console.log(data)
       setIsEditing(false)
       setAnswer(data.editedDetails.body)
       setUpdatedAt(data.editedDetails.updated_at)
@@ -71,9 +74,9 @@ const AnswerBody = ({url, upvotedBy, downvotedBy, childrenComments, body, userna
           color: "#fff"
         }
       })
-
-    } catch(err) {
       
+    } catch(err) {
+      console.log(err)
     }
   }
 

@@ -281,10 +281,6 @@ const SingleQuestion = () => {
                   <p className='text-gray-800 text-mobile-sm md:text-base pr-4 whitespace-pre-line dark:text-dark-text'>{body}</p>
                 )
               }
-              <div className="flex mt-2">
-                <Tag tagName={branch} />
-
-              </div>
               <div className=" mt-1.5 pr-4">
               
                 <div className="flex place-items-start">

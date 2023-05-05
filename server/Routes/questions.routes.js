@@ -2,7 +2,7 @@ const router = require("express").Router()
 const db = require("../dbConfig")
 
 router.post("/post", async(req, res) => {
-  const { title, body, branch, isPinned, flair, imgURL } = req.body
+  const { title, body, flair, imgURL } = req.body
   const priority = req.priority
   try{
 
@@ -12,9 +12,9 @@ router.post("/post", async(req, res) => {
 
 
     const getQuestionsQuery = await db.query(`
-      INSERT INTO questions(title, body, branch, is_pinned, sub_flair, img_url, search_helper, created_at, upvoted_by, user_id) VALUES
-      ($1,$2,$3, $4, $5, $6, to_tsvector($7), $8, $9, $10) returning id
-    `, [title, body, branch,  priority===0?false:true, flair, imgURL, body, new Date(), [req.userID], req.userID])
+      INSERT INTO questions(title, body, sub_flair, search_helper, created_at, upvoted_by, user_id) VALUES
+      ($1,$2,$3, to_tsvector($4), $5, $6, $7) returning id
+    `, [title, body,flair, body, new Date(), [req.userID], req.userID])
 
     if(getQuestionsQuery.rowCount>0){
       return res.status(200).json({
@@ -34,7 +34,7 @@ router.get("/id/:id", async(req, res) => {
   try{
 
     const getQuestionByIDQuery = await db.query(`
-      SELECT q.id, user_id, title, body, q.branch, sub_flair, upvoted_by, downvoted_by, created_at, username, profile_url
+      SELECT q.id, user_id, title, body, sub_flair, upvoted_by, downvoted_by, created_at, username, profile_url
       FROM questions q
       JOIN users u ON q.user_id = u.id
       WHERE q.id = $1
@@ -49,38 +49,23 @@ router.get("/id/:id", async(req, res) => {
   }
 })
 
-router.get('/branch/:branch', async(req, res) => {
-  const branch = req.params.branch
+router.get('/', async(req, res) => {
   const flair = req.query.flair
   try{
     if(!flair){
       const getPostDetailsByFlair = await db.query(`
-        SELECT q.id, q.user_id, q.title, q.branch, q.body, sub_flair, q.upvoted_by, q.downvoted_by, q.created_at, username, COUNT(a.q_id) as total_replies, username, profile_url, is_pinned
+        SELECT q.id, q.user_id, q.title, q.body, sub_flair, q.upvoted_by, q.downvoted_by, q.created_at, username, COUNT(a.q_id) as total_replies, username, profile_url
         FROM questions q
         JOIN users u ON q.user_id = u.id
         LEFT JOIN answers a ON q.id = a.q_id
         GROUP BY q.id, u.username, u.profile_url
-        ORDER BY q.is_pinned DESC, q.created_at DESC
+        ORDER BY q.created_at DESC
       `)
       if(getPostDetailsByFlair.rowCount > 0){
         return res.status(200).json({code: 1, posts: getPostDetailsByFlair.rows})
       }else{
         return res.status(200).json({code:1, message: "Could not find any posts with that specific flair"})
       }
-    }else{
-      const getPostDetailsByFlair = await db.query(`
-      SELECT q.id, q.user_id, q.title, q.branch, q.body, sub_flair, q.upvoted_by, q.downvoted_by, q.created_at, username, COUNT(a.q_id) as total_replies
-      FROM questions q
-      JOIN users u ON q.user_id = u.id
-      LEFT JOIN answers a ON q.id = a.q_id
-      WHERE q.branch ILIKE $1 AND sub_flair ILIKE $2
-      GROUP BY q.id, u.username
-    `, [branch, flair])
-    if(getPostDetailsByFlair.rowCount > 0){
-      return res.status(200).json({code: 1, posts: getPostDetailsByFlair.rows})
-    }else{
-      return res.status(200).json({code:1, message: "Could not find any posts with that specific flair"})
-    }
     }
   } catch(err){
     console.log(err)
