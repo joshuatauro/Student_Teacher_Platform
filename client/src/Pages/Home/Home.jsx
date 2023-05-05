@@ -11,7 +11,7 @@ function Home() {
           <div class="content">
             <div class="textbox">
               <h1>WELCOME TO<br/>HIVE<span>!</span></h1>
-              <h3>"Ab jayenge badiyawali college"</h3>
+              <h3>"Discover your path to higher education with just a few clicks."</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quis cum, maxime provident sit, voluptate eum commodi cumque eos placeat officia eius.</p>
                 
                 <div class="search">
