@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import MainNavbar from '../MainNavbar'
 import SideNav from '../sidenav';
+import PlacementPrep from '../../Pages/PlacementPrep';
 import { BrowserRouter, Route, Routes, Link  } from 'react-router-dom';
+import Resources from '../../Pages/Resources';
 
 import data from '../data'
 import { StarIcon, ArrowDownTrayIcon } from '@heroicons/react/24/solid'
@@ -136,7 +138,7 @@ const College = () => {
 					</div>
 				</div>
 				<div className='page-nav'>
-				<nav>
+				{/* <nav>
 					<div>
 						<Link to="/college">Info</Link>
 						<Link to="/college/courses">Courses</Link>
@@ -145,13 +147,15 @@ const College = () => {
 						<Link to="/college/contact">Contact</Link>
 					</div>
 					<Link className='forum-link'>Forum</Link>
-				</nav>
+				</nav> */}
 				<Routes>
 					<Route path="" element={<About />}/>
 					<Route path="courses" element={<Courses />}/>
 					<Route path="placements" element={<Placements />}/>
 					<Route path="scholarships" element={<Scholarships />}/>
 					<Route path="contact" element={<Contact />}/>
+					<Route path="placement-prep" element={<PlacementPrep />}/>
+					<Route path="resources" element={<Resources />}/>
 				</Routes>
 				</div>
 				
