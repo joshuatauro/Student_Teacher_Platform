@@ -1,5 +1,6 @@
 import './home.scss';
 import MainNavbar from '../../Components/MainNavbar';
+import CollegeList from '../../Components/CollegeList/CollegeList';
 
 function Home() {
   return (
@@ -8,6 +9,7 @@ function Home() {
       <div id="Home" className="Home">
       
         <MainNavbar />
+        <CollegeList />
         <section class="hero">
           <div class="content">
             <div class="textbox">
