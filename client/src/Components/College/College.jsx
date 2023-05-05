@@ -65,7 +65,6 @@ const Scholarships = () => {
 	  <div className='scholarships'>
 		  <h1>Scholarships</h1>
 		  <div className="content">
-			  <h2><b></b>NIRF Rank</h2>
 			  <p>{data.clg_desc}</p>
 		  </div>
 	  </div>
