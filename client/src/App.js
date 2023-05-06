@@ -21,6 +21,7 @@ import RegisterCollege from './Pages/RegisterCollege';
 import College from './Components/College/College';
 import MainNavbar from './Components/MainNavbar';
 import Home from './Pages/Home/Home';
+import Footer from './Components/Footer';
 
 
 const SearchRoute = () => {
@@ -128,6 +129,7 @@ function App() {
         <Route path="/post" element={<PostCreateRoute tab={4} />} />           
         <Route path="/:cID/*" element={<College/>}/>                              
       </Routes>
+      <Footer />
       </BrowserRouter>
     </div>
   );

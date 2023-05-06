@@ -154,7 +154,7 @@ const College = () => {
 		<div className='side-nav-container'>
 			<SideNav />	
 		</div>
-		<div className='college-wrapper min-w-full flex justify-center'>
+		<div className='college-wrapper min-w-full flex justify-center mb-[100px]'>
 			<div className=" bg-white mt-10 w-full">
 				<div  className='section-1   '>
 					<div className='banner'>
