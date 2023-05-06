@@ -9,7 +9,7 @@ function Home() {
       <div id="Home" className="Home">
       
         <MainNavbar />
-        <CollegeList />
+        {/* <CollegeList /> */}
         <section class="hero">
           <div class="content">
             <div class="textbox">
