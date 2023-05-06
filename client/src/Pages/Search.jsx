@@ -25,7 +25,7 @@ const SearchQuestions = () => {
 
 
   return (
-    <div className="md:border-x-2 min-h-custom dark:bg-dark dark:text-white dark:border-dark-fade transition duration-300">
+    <div className=" min-h-custom dark:bg-dark dark:text-white dark:border-dark-fade transition duration-300">
       <div className="px-4 m-auto py-5 border-b-2 dark:border-gray-700 ">
         <div className="flex items-center justify-between">
           <h1 className="text-mobile-lg md:text-[24px] font-medium text-gray-800 dark:text-white mr-2">Search</h1>
@@ -35,10 +35,11 @@ const SearchQuestions = () => {
         </div>
         
       </div>
+      <h1 className='text-xl my-3'>Querying posts with content: "{searchParams.get("q")}"</h1>
       {
         questions?.length > 0 ? (
           <>
-          {questions?.map(({title, body, profile_url, username, created_at, total_replies, tags, upvoted_by, downvoted_by, question_id, branch, id}) => <PostPreview title={title} branch={branch} body={body} qID={id} username={username} upvotedBy={upvoted_by} downvotedBy={downvoted_by} createdAt={created_at} totalAnswers={total_replies} url={profile_url} />)}
+          {questions?.map(({title, body, profile_url, username, created_at, total_replies, sub_flair, upvoted_by, downvoted_by, question_id, branch, id}) => <PostPreview title={title} branch={branch} body={body} qID={id} username={username} upvotedBy={upvoted_by} downvotedBy={downvoted_by} createdAt={created_at} totalAnswers={total_replies} url={profile_url} subFlair={sub_flair} />) }
           <div className="flex justify-center my-4">
       </div>  
           </>

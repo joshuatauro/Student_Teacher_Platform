@@ -6,7 +6,6 @@ const SideNav = ({tab}) => {
   const [val, setVal] = useState(1)
   const { cID } = useParams()
   useEffect(() => {
-    console.log(window.location.href.split('/'))
     if(window.location.href.split('/')[4] === "courses"){
       setVal(2)
     } else if(window.location.href.split('/')[4] === "placements"){

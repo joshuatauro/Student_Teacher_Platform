@@ -18,13 +18,11 @@ const branchOptions = [
 ]
 
 const Publish = () => {
-  const {college} = useParams()
-  const [branch, setBranch] = useState('CSE')
+  const {cID} = useParams()
   const [flair, setFlair] = useState('DOUBT')
 
   const navigate = useNavigate()
 
-  const [selected, setSelected] = useState([])
 
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
@@ -66,7 +64,7 @@ const Publish = () => {
         })
       
 
-      const { data } = await axios.post('/api/questions/post', { title, body, college, flair }, { withCredentials: true })
+      const { data } = await axios.post('/api/questions/post', { title, body, cID, flair }, { withCredentials: true })
       if(data.code === 1) {
         toast.success(data.message, {
           iconTheme: {
@@ -80,7 +78,7 @@ const Publish = () => {
         })
         console.log(data)
         setTimeout(() => {
-          return navigate(`/question/${data.id}`)
+          return navigate(`/${cID}/forum/${data.id}`)
         }, "2500")
       }
     } catch(err) {

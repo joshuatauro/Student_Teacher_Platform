@@ -237,7 +237,7 @@ const SingleQuestion = () => {
             duration: 2500
           })
           setTimeout(() => {
-            navigate('/')
+          return navigate(`/${cID}/forum`)
           }, 2000);
         }
       } catch(err) {

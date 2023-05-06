@@ -11,8 +11,8 @@ import "./college.scss"
 import PostPreview from '../PostPreview';
 import Publish from '../../Pages/CreatePost';
 import SingleQuestion from '../../Pages/SingleQuestion';
-
-
+import { useLocation } from 'react-router-dom';
+import SearchQuestions from '../../Pages/Search'
 const About = ({data}) => {
   return (
 	<div className='about'>
@@ -90,13 +90,14 @@ const Contact = () => {
 }
 
 const Questions = ({id}) => {
-	
+	const location = useLocation()
+	const { cID } = useParams()
   const [posts, setPosts] = useState([])
   const navigate = useNavigate()
 
 	const handleSearchQuery = (e) => {
     e.preventDefault()
-    navigate(`search?q=${search}`)
+    navigate(`/${cID}/forum/search?q=${search}`)
   }
 const searchShow = true
 	const [search, setSearch] = useState('')
@@ -107,9 +108,9 @@ const searchShow = true
       console.log(data)
       setPosts(data.posts)
     }
-		console.log("RENDERED")
+		// alert("rendered", )
     getDetails()
-  }, [])
+  }, [location.pathname])
 	return(
 		<div className=''>
 		<div className="w-full mb-32 ">
@@ -153,13 +154,12 @@ const College = () => {
 		<div className='side-nav-container'>
 			<SideNav />	
 		</div>
-		<div className='college-wrapper bg-white min-w-full flex justify-center'>
-			<div className=" bg-white mt-10">
+		<div className='college-wrapper min-w-full flex justify-center'>
+			<div className=" bg-white mt-10 w-full">
 				<div  className='section-1   '>
 					<div className='banner'>
 						<img className=' object-contain' src={collegeInfo.banner_url} alt={collegeInfo.clg_name} />
-					</div>
-								
+					</div>	
 					<div className='bottom'>
 						<div className='img-container'>
 							<img className='' src={collegeInfo.logo_url} alt={collegeInfo.clg_name} />
@@ -194,7 +194,7 @@ const College = () => {
 					<Route path="placement-prep" element={<PlacementPrep />}/>
 					<Route path="resources" element={<Resources />}/>
 					<Route path="forum" element={<Questions />} />
-					<Route path="forum/search" element={<Questions />} />
+					<Route path="forum/search" element={<SearchQuestions />} />
 					<Route path="forum/:qID" element={<SingleQuestion />} />
 
 					<Route path="post" element={<Publish />} />
