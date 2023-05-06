@@ -26,9 +26,9 @@ router.post("/sign-up", async(req, res) => {
 
     const identifier = email.split("@")[1]
     
-    const getCollegeName = await db.query("SELECT clg_name FROM college WHERE email_identifier = $1", [identifier])
+    const getCollegeName = await db.query("SELECT id FROM college WHERE email_identifier = $1", [identifier])
 
-    const collegeName = getCollegeName.rows[0]?.clg_name || "general"
+    const collegeName = getCollegeName.rows[0]?.clg_name || "0"
 
     if(checkEmailQuery.rowCount > 0) return res.status(400).json({code: -1,message: "The email is already in use"})
 

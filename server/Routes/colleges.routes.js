@@ -16,6 +16,8 @@ router.post("/add", async(req, res) => {
   }
 })
 
+router.get("/search")
+
 router.get("/:collegeID", async(req, res) => {
   const collegeID = req.params.collegeID
 
@@ -28,6 +30,15 @@ router.get("/:collegeID", async(req, res) => {
 
   }catch(err) {
     console.log(err)
+  }
+})
+
+router.get("/", async(req, res) => {
+  try{
+    const getAllColleges = await db.query('SELECT id, clg_name, clg_desc, clg_url, rank, rating, avg_pkg, logo_url, brochure_url FROM college')
+    res.status(200).json(getAllColleges.rows)
+  } catch(err){ 
+    console.log(err.message, "IN ALL COLLEGES ROUTES")
   }
 })
 

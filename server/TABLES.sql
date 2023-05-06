@@ -23,7 +23,8 @@ CREATE TABLE questions (
   created_at TIMESTAMP NOT NULL,
   sub_flair VARCHAR,
   img_url VARCHAR,
-  search_helper TSVECTOR NOT NULL
+  search_helper TSVECTOR NOT NULL,
+  c_id VARCHAR NOT NULL
 );
 
 CREATE TABLE answers (
@@ -38,15 +39,6 @@ CREATE TABLE answers (
   is_verified INT DEFAULT 0
 );
 
-CREATE TABLE comments (
-  id VARCHAR PRIMARY KEY DEFAULT uuid_generate_v4(),
-  q_id VARCHAR REFERENCES questions(id) ON DELETE CASCADE,
-  user_id VARCHAR REFERENCES users(id) ON DELETE SET NULL,
-  a_id VARCHAR REFERENCES answers(id) ON DELETE CASCADE,
-  body VARCHAR NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP NOT NULL
-);
 
 CREATE TABLE college (
   id VARCHAR PRIMARY KEY DEFAULT uuid_generate_v4(),
