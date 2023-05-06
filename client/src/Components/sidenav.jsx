@@ -27,7 +27,7 @@ const SideNav = ({tab}) => {
     }
   }, [window.location.href])
   return (
-    <div className="pt-5  h-custom w-[200px] h-screen dark:bg-dark transition duration-300 hidden lg:block">
+    <div className="pt-5  h-custom w-[200px] h-screen dark:bg-dark transition duration-300 hidden lg:block fixed">
       <div className="">
         <ul className="">
           <Link to={``}>
